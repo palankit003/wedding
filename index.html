@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priya & Rahul's Wedding Invitation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #fff8e1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+            transition: background-color 0.5s ease;
+        }
+        
+        body.fullscreen {
+            padding: 0;
+            background-color: #fff0e0;
+        }
+        
+        .container {
+            position: relative;
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            z-index: 1;
+        }
+        
+        body.fullscreen .container {
+            max-width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .decorative-element {
+            position: absolute;
+            opacity: 0.2;
+            z-index: -1;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .decorative-element.top-left {
+            top: -50px;
+            left: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #ff9292 0%, transparent 70%);
+            border-radius: 50%;
+            animation-delay: 0s;
+        }
+        
+        .decorative-element.bottom-right {
+            bottom: -70px;
+            right: -70px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #ffac54 0%, transparent 70%);
+            border-radius: 50%;
+            animation-delay: 1s;
+        }
+        
+        body.fullscreen .decorative-element.top-left {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+        }
+        
+        body.fullscreen .decorative-element.bottom-right {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -150px;
+        }
+        
+        .paisley {
+            position: absolute;
+            font-size: 60px;
+            color: #873800;
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        .paisley.top-right {
+            top: 20px;
+            right: 20px;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .paisley.top-left {
+            top: 20px;
+            left: 20px;
+            animation: rotate 20s linear infinite reverse;
+        }
+        
+        .paisley.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .paisley.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            animation: rotate 20s linear infinite reverse;
+        }
+        
+        body.fullscreen .paisley {
+            font-size: 120px;
+        }
+        
+        body.fullscreen .paisley.top-right {
+            top: 50px;
+            right: 50px;
+        }
+        
+        body.fullscreen .paisley.top-left {
+            top: 50px;
+            left: 50px;
+        }
+        
+        body.fullscreen .paisley.bottom-right {
+            bottom: 50px;
+            right: 50px;
+        }
+        
+        body.fullscreen .paisley.bottom-left {
+            bottom: 50px;
+            left: 50px;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #fff1f1 0%, #fff5e6 100%);
+            border: 2px solid #ffd27d;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: fadeIn 1s forwards 0.5s;
+            transition: all 0.5s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        body.fullscreen .card {
+            max-width: 900px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 50px;
+        }
+        
+        .inner-border {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 1px solid #ffc069;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+            animation: borderReveal 1s forwards 1s;
+        }
+        
+        .om-symbol {
+            text-align: center;
+            font-size: 48px;
+            color: #e53935;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: dropIn 1s forwards 0.8s;
+        }
+        
+        body.fullscreen .om-symbol {
+            font-size: 60px;
+        }
+        
+        .header {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 1s forwards 1.2s;
+        }
+        
+        .header h3 {
+            color: #8d4004;
+            font-weight: 600;
+            letter-spacing: 2px;
+            font-size: 16px;
+        }
+        
+        body.fullscreen .header h3 {
+            font-size: 20px;
+            letter-spacing: 3px;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        
+        .divider-line {
+            height: 1px;
+            width: 80px;
+            background-color: #b17d4a;
+        }
+        
+        body.fullscreen .divider-line {
+            width: 120px;
+        }
+        
+        .heart-icon {
+            color: #e53935;
+            margin: 0 10px;
+            font-size: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        body.fullscreen .heart-icon {
+            font-size: 28px;
+        }
+        
+        .names {
+            font-size: 48px;
+            font-weight: 700;
+            color: #9c2929;
+            margin: 15px 0;
+        }
+        
+        body.fullscreen .names {
+            font-size: 72px;
+        }
+        
+        .invitation-text {
+            color: #8d4004;
+            margin: 15px 0;
+        }
+        
+        body.fullscreen .invitation-text {
+            font-size: 24px;
+        }
+        
+        .details {
+            margin-top: 40px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        
+        .detail-item:nth-child(1) {
+            animation: slideRight 1s forwards 1.6s;
+        }
+        
+        .detail-item:nth-child(2) {
+            animation: slideRight 1s forwards 1.8s;
+        }
+        
+        .detail-item:nth-child(3) {
+            animation: slideRight 1s forwards 2s;
+        }
+        
+        .icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            margin-top: 3px;
+            color: #c62828;
+        }
+        
+        body.fullscreen .icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 20px;
+        }
+        
+        .detail-content h3 {
+            color: #9c2929;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .detail-content p {
+            color: #6d4c41;
+        }
+        
+        body.fullscreen .detail-content h3 {
+            font-size: 22px;
+        }
+        
+        body.fullscreen .detail-content p {
+            font-size: 20px;
+        }
+        
+        .rsvp-section {
+            text-align: center;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 1s forwards 2.2s;
+        }
+        
+        .rsvp-button {
+            background-color: #c62828;
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .rsvp-button:hover {
+            background-color: #b71c1c;
+            transform: scale(1.05);
+        }
+        
+        body.fullscreen .rsvp-button {
+            padding: 15px 50px;
+            font-size: 20px;
+        }
+        
+        .footer-text {
+            font-style: italic;
+            color: #8d4004;
+            margin-top: 20px;
+        }
+        
+        body.fullscreen .footer-text {
+            font-size: 20px;
+        }
+        
+        /* Fullscreen button */
+        .fullscreen-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(150, 90, 56, 0.7);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .fullscreen-toggle:hover {
+            background-color: rgba(150, 90, 56, 0.9);
+            transform: scale(1.1);
+        }
+        
+        .fullscreen-toggle svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes borderReveal {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes dropIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .card {
+                padding: 30px 20px;
+            }
+            
+            .names {
+                font-size: 36px;
+            }
+            
+            .paisley {
+                font-size: 40px;
+            }
+            
+            body.fullscreen .names {
+                font-size: 42px;
+            }
+            
+            body.fullscreen .paisley {
+                font-size: 70px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px 15px;
+            }
+            
+            .names {
+                font-size: 28px;
+            }
+            
+            .divider-line {
+                width: 50px;
+            }
+            
+            .paisley {
+                font-size: 30px;
+            }
+            
+            body.fullscreen .names {
+                font-size: 32px;
+            }
+            
+            body.fullscreen .card {
+                padding: 25px 15px;
+            }
+            
+            body.fullscreen .paisley {
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Decorative Elements -->
+        <div class="decorative-element top-left"></div>
+        <div class="decorative-element bottom-right"></div>
+        
+        <!-- Paisley Patterns -->
+        <div class="paisley top-left">❁</div>
+        <div class="paisley top-right">✿</div>
+        <div class="paisley bottom-left">✿</div>
+        <div class="paisley bottom-right">❁</div>
+        
+        <div class="card">
+            <div class="inner-border"></div>
+            
+            <!-- Om Symbol -->
+            <div class="om-symbol">ॐ</div>
+            
+            <!-- Invitation Header -->
+            <div class="header">
+                <h3>WITH THE BLESSINGS OF OUR FAMILIES</h3>
+                
+                <div class="divider">
+                    <div class="divider-line"></div>
+                    <div class="heart-icon">❤</div>
+                    <div class="divider-line"></div>
+                </div>
+                
+                <h1 class="names">Priya & Rahul</h1>
+                <p class="invitation-text" style="font-size: 20px;">REQUEST THE PLEASURE OF YOUR COMPANY</p>
+                <p class="invitation-text">AT THE CELEBRATION OF THEIR MARRIAGE</p>
+            </div>
+            
+            <!-- Wedding Details -->
+            <div class="details">
+                <div class="detail-item">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <div class="detail-content">
+                        <h3>Date & Time</h3>
+                        <p>Saturday, November 15, 2025 at 6:00 PM</p>
+                    </div>
+                </div>
+                
+                <div class="detail-item">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <div class="detail-content">
+                        <h3>Venue</h3>
+                        <p>The Grand Palace Gardens</p>
+                        <p>123 Wedding Road, Mumbai</p>
+                    </div>
+                </div>
+                
+                <div class="detail-item">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18V5l12-2v13"></path>
+                        <circle cx="6" cy="18" r="3"></circle>
+                        <circle cx="18" cy="16" r="3"></circle>
+                    </svg>
+                    <div class="detail-content">
+                        <h3>Celebrations</h3>
+                        <p>Sangeet: Nov 13 • Mehendi: Nov 14 • Reception: Nov 16</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RSVP Section -->
+            <div class="rsvp-section">
+                <button class="rsvp-button" onclick="alert('Thank you for your RSVP!')">RSVP</button>
+                <p class="footer-text">We look forward to celebrating with you!</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fullscreen Toggle Button -->
+    <button class="fullscreen-toggle" id="fullscreenToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+        </svg>
+    </button>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fullscreen functionality
+            const body = document.body;
+            const fullscreenToggle = document.getElementById('fullscreenToggle');
+            
+            // Toggle fullscreen class on body
+            fullscreenToggle.addEventListener('click', function() {
+                body.classList.toggle('fullscreen');
+                
+                // Update button icon based on fullscreen state
+                if (body.classList.contains('fullscreen')) {
+                    fullscreenToggle.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 14h3a2 2 0 0 1 2 2v3M7 4v3a2 2 0 0 0 2 2h3M20 10h-3a2 2 0 0 1-2-2V5M17 20v-3a2 2 0 0 0-2-2h-3"></path>
+                        </svg>
+                    `;
+                    
+                    // Request browser fullscreen
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen();
+                    } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
+                        document.documentElement.mozRequestFullScreen();
+                    } else if (document.documentElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                        document.documentElement.webkitRequestFullscreen();
+                    } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
+                        document.documentElement.msRequestFullscreen();
+                    }
+                } else {
+                    fullscreenToggle.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                        </svg>
+                    `;
+                    
+                    // Exit browser fullscreen
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) { /* Firefox */
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) { /* IE/Edge */
+                        document.msExitFullscreen();
+                    }
+                }
+            });
+            
+            // Handle ESC key to exit fullscreen
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+            document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+            document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+            
+            function handleFullscreenChange() {
+                // If browser fullscreen is exited, also remove our fullscreen class
+                if (!document.fullscreenElement && 
+                    !document.webkitFullscreenElement && 
+                    !document.mozFullScreenElement && 
+                    !document.msFullscreenElement) {
+                    
+                    body.classList.remove('fullscreen');
+                    fullscreenToggle.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                        </svg>
+                    `;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
